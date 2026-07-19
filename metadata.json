@@ -1,0 +1,6 @@
+{
+  "name": "Retail Customer Segmentation",
+  "description": "An interactive RFM (Recency, Frequency, Monetary) segmentation simulator and relational Star Schema explorer for e-commerce data analytics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
