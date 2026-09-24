@@ -1,20 +1,40 @@
-# Retail Customer Segmentation Engine (RFM Model)
+# Retail Customer Segmentation (RFM Demo)
 
-An interactive behavior modeling application that implements the Recency, Frequency, and Monetary Value (RFM) analytics framework. This project performs data validation, executes quantile scoring, and structures data into a performance-optimized relational model.
+An interactive RFM segmentation demo built with React, TypeScript, and an Express service. It aggregates transaction rows by customer, scores recency, frequency, and monetary value into rank-based quartiles, and assigns customer segments.
 
-## 🏗️ Architecture Flow
-[Raw Retail Data] ──> [Data Validation Script] ──> [RFM Statistical Scoring] ──> [Interactive Insights Dashboard]
+## What runs
 
-## 🚀 Key Features
-- **Quantile Tier Profiling**: Utilizes data transformation techniques to categorize customer behavior into distinct statistical quartiles.
-- **Strategic Mapping**: Identifies unique customer segments, distinguishing 'Core High Value' assets from 'At Risk' users requiring targeted retention campaigns.
-- **Star Schema Performance**: Groups processed files into logical dimension and fact table relations to maximize reporting compute efficiency.
+- `server.ts` contains the executable RFM calculation and the `POST /api/segmentation/process` endpoint.
+- The React app in `src/App.tsx` sends transaction rows to that endpoint and displays the returned scores and segment summaries.
+- The service starts with a hand-authored sample of 39 transactions across 20 customers. The UI also supports adding transactions manually.
+- `src/data.ts` contains Python, PostgreSQL, and DAX code examples for reference. The application does not execute these snippets.
 
-## 🛠️ Technology Stack
-- **Analytics & Logic**: Python (Pandas, NumPy, Datetime operations), TypeScript
-- **Database Layer**: PostgreSQL / Relational Structures
-- **Visualization Layer**: Interactive Analytics UI via AI Studio & Vercel
+The repository also contains `retail_transactions.csv`; the app does not load that file automatically. The dashboard's default results come from the sample in `server.ts`.
 
-## 📊 Analytical Insights Documented
-- **Revenue Concentration**: Documented that the 'Core High Value' customer cluster accounts for a disproportionate volume (~48%) of total top-line store revenue.
-- **Lifecycle Alignment**: Cross-referenced recency degradation scores against transactional categories to highlight shifting seasonal demand patterns.
+## Revenue share calculation
+
+The UI calculates Core High Value revenue by summing the segment's `Monetary` values, divides it by total `Monetary` across all scored customers, and displays the percentage. This is a live calculation over the current app data, not a fixed benchmark.
+
+The earlier ~48% statement was not reproducible from the default sample in the current code, so this README does not present it as a verified result.
+
+## Run locally
+
+Requirements: Node.js and npm.
+
+```bash
+npm install
+npm run dev
+```
+
+Open the local URL printed by Vite. Use the sample data or add transaction rows in the UI to see the segmentation update.
+
+## Project layout
+
+- `server.ts`: sample records, RFM scoring, and API
+- `src/App.tsx`: dashboard, input flow, and revenue-share display
+- `src/data.ts`: star-schema examples and reference code snippets
+- `retail_transactions.csv`: included transaction data file
+
+## Scope
+
+This is a portfolio demo, not a deployed AWS or PostgreSQL data pipeline. The included Python, PostgreSQL, and DAX snippets are illustrative templates; only the TypeScript service powers the interactive RFM results.
